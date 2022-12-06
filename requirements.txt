@@ -4,7 +4,8 @@ config==0.5.1
 distlib==0.3.6
 filelock==3.8.2
 Flask==2.2.2
-importlib-metadata==5.0.0
+gunicorn==20.1.0
+importlib-metadata==5.1.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.1
@@ -16,4 +17,4 @@ psycopg2-binary==2.9.4
 virtualenv==20.17.1
 virtualenv-clone==0.5.7
 Werkzeug==2.2.2
-zipp==3.9.0
+zipp==3.11.0
