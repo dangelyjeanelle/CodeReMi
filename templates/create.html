@@ -1,0 +1,22 @@
+{# templates/create.html #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Error</title>
+</head>
+
+<body>
+  <form method="post">
+    <input type="text" name="lesson_name" class="form-control border-light" placeholder="Lesson name" required>
+    <input type="text" name="lesson_content" class="form-control border-light" placeholder="Lesson content" style="height: 200px; width: 300px;" required>
+    <input type="text" name="preview_path" class="form-control border-light" placeholder="Preview image path" required>
+    <input type="text" name="lesson_image_1" class="form-control border-light" placeholder="Lesson image 1 path">
+    <input type="text" name="lesson_image_2" class="form-control border-light" placeholder="Lesson image 2 path">
+    <input type="text" name="lesson_image_3" class="form-control border-light" placeholder="Lesson image 3 path">
+    <button type="submit" class="btn btn-secondary px-4 px-lg-5" formaction="/pushlessontodatabase">Create lesson</button>
+  </form>
+  
+</body>
+</html>
