@@ -152,18 +152,19 @@ def home():
 @app.route("/lessons", methods=['GET', 'POST'])
 def lessons():
     all_lessons = get_all_lessons()
-    print("ALL", all_lessons)
-    search = request.form.get("lesson_search")
-    print(search)
-    if search:
-        print("THIS", search)
-        req_lessons = []
-        for lesson in all_lessons:
-            if str(search).lower() in lesson['name'].lower():
-                req_lessons.append(lesson)
-        return render_template("lessons.html", title="CodeReMi Lessons", lessons=req_lessons)
-    return render_template("lessons.html", title="CodeReMi Lessons", lessons=all_lessons)
-
+    if all_lessons:
+        print("ALL", all_lessons)
+        search = request.form.get("lesson_search")
+        print(search)
+        if search:
+            print("THIS", search)
+            req_lessons = []
+            for lesson in all_lessons:
+                if str(search).lower() in lesson['name'].lower():
+                    req_lessons.append(lesson)
+            return render_template("lessons.html", title="CodeReMi Lessons", lessons=req_lessons)
+        return render_template("lessons.html", title="CodeReMi Lessons", lessons=all_lessons)
+    return render_template("lessons.html", title="CodeReMi Lessons", lessons=[])
 @app.route("/lesson", methods=['GET', 'POST'])
 def lesson():
     lesson_id = request.args.get("id")
@@ -172,7 +173,9 @@ def lesson():
         if row:
             all_lessons = get_all_lessons()
             lesson_dict = dict(id=row[0], name=row[1], content=row[2], preview_path=row[3], img1_path=row[4], img2_path=row[5], img3_path=row[6])
-            return render_template("lesson.html", id=lesson_id, lesson=lesson_dict, all_lessons=all_lessons)
+            if all_lessons:
+                return render_template("lesson.html", id=lesson_id, lesson=lesson_dict, all_lessons=all_lessons)
+            return render_template("lesson.html", id=lesson_id, lesson=lesson_dict, all_lessons=[])
         else:
             return render_template("error.html")
     else:
