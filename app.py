@@ -103,7 +103,9 @@ def get_all_lessons():
             row = cur.fetchone()
         # close the communication with the PostgreSQL database server
         cur.close()
-        return all_lessons
+        if all_lessons:
+            return all_lessons
+        return []
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -129,7 +131,9 @@ def get_lesson_by_id(lesson_id):
         lesson = cur.fetchone()
         # close the communication with the PostgreSQL database server
         cur.close()
-        return lesson
+        if lesson:
+            return lesson
+        return {}
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
