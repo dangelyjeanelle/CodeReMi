@@ -12,7 +12,7 @@ def initialize_lessons_table():
     conn = None
     try:
         # connect to the PostgreSQL database
-        conn = psycopg2.connect(DATABASE_URL, ssl='required')
+        conn = psycopg2.connect(DATABASE_URL, ssl='require')
         # create a cursor object for execution
         cur = conn.cursor()
         cur.execute('DROP TABLE IF EXISTS lessons;')
