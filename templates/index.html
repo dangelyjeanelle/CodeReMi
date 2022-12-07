@@ -120,6 +120,7 @@
             </div>
         </div>
         <div class="owl-carousel courses-carousel">
+            {% if lessons %}
             {% for lesson in lessons %}
             <div class="courses-item position-relative">
                 <img class="img-fluid" src="static/images/{{lesson.preview_path}}" alt="">
@@ -133,6 +134,7 @@
                 </div>
             </div>
             {% endfor %}
+            {% endif %}
         </div>
         <!-- <div class="row justify-content-center bg-image mx-0 mb-5">
             <div class="col-lg-6 py-5">

@@ -88,6 +88,7 @@
 
               <h2 class="mb-3">More Lessons</h2>
               <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
+                {% if lessons %}
                 {% for l in all_lessons %}
                 {% if lesson.id != l.id %}
                   <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="lesson.html?id={{l.id}}">
@@ -102,6 +103,7 @@
                   </a>
                 {% endif %}
                 {% endfor %}
+                {% endif %}
               </div>
          </div>
 
