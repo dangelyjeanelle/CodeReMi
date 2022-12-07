@@ -1,35 +1,18 @@
 # app.py
 
 from crypt import methods
+import ssl
 from flask import Flask, render_template, request, redirect
 import os
 import psycopg2
 
-dbname = 'd142ske1bsnjoq'
-user = 'tnroyjmzmacvis'
-password = 'fbbbe2b0fda76768890291f68dd049901a91058d124a0bd685d59a256ae66409'
-host = 'ec2-54-208-104-27.compute-1.amazonaws.com'
-port = '5432'
-
-conn = psycopg2.connect(
-            dbname=dbname,
-            user=user,
-            password=password,
-            host=host,
-            port=port
-            )
+DATABASE_URL = os.environ['DATABASE_URL']
 
 def initialize_lessons_table():
     conn = None
     try:
         # connect to the PostgreSQL database
-        conn = psycopg2.connect(
-            dbname=dbname,
-            user=user,
-            password=password,
-            host=host,
-            port=port
-            )
+        conn = psycopg2.connect(DATABASE_URL, ssl='required')
         # create a cursor object for execution
         cur = conn.cursor()
         cur.execute('DROP TABLE IF EXISTS lessons;')
@@ -54,18 +37,7 @@ def insert_lesson_into_lesson_tables(name, content, preview_path, img1_path, img
     conn = None
     try:
         # connect to the PostgreSQL database
-        # conn = psycopg2.connect(
-        # host="localhost",
-        # database="flask_db",
-        # user="postgres",
-        # password="Dangely")
-        conn = psycopg2.connect(
-            dbname=dbname,
-            user=user,
-            password=password,
-            host=host,
-            port=port
-            )
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         # create a cursor object for execution
         cur = conn.cursor()
         cur.execute('INSERT INTO lessons (name, content, preview_path, img1_path, img2_path, img3_path)'
@@ -85,11 +57,7 @@ def get_all_lessons():
     conn = None
     try:
         # connect to the PostgreSQL database
-        conn = psycopg2.connect(
-        host="localhost",
-        database="flask_db",
-        user="postgres",
-        password="Dangely")
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         # create a cursor object for execution
         cur = conn.cursor()
         cur.execute('SELECT id, name, content, preview_path, img1_path, img2_path, img3_path '
@@ -117,11 +85,7 @@ def get_lesson_by_id(lesson_id):
     conn = None
     try:
         # connect to the PostgreSQL database
-        conn = psycopg2.connect(
-        host="localhost",
-        database="flask_db",
-        user="postgres",
-        password="Dangely")
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         # create a cursor object for execution
         cur = conn.cursor()
         cur.execute('SELECT * '
