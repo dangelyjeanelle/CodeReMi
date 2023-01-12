@@ -61,7 +61,7 @@ def get_all_lessons():
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         # create a cursor object for execution
         cur = conn.cursor()
-        cur.execute('SELECT id, name, content, preview_path, img1_path, img2_path, img3_path '
+        cur.execute('SELECT id, name, content, content2, preview_path, img1_path, img2_path, img3_path '
                     'FROM lessons')
         # process the result set
         row = cur.fetchone()
