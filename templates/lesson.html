@@ -100,7 +100,7 @@
                 {% if all_lessons %}
                 {% for l in all_lessons %}
                 {% if lesson.id != l.id %}
-                  <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="lesson.html?id={{l.id}}">
+                  <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="lesson?id={{l.id}}">
                       <img class="img-fluid" src="static/images/{{l.preview_path}}" alt="">
                       <div class="courses-text">
                           <h4 class="text-center text-white px-3">{{l.name}}</h4>
