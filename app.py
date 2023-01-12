@@ -19,6 +19,7 @@ def initialize_lessons_table():
         cur.execute('CREATE TABLE lessons (id serial PRIMARY KEY,'
                                  'name varchar (150) NOT NULL,'
                                  'content text NOT NULL,'
+                                 'content2 text NOT NULL,'
                                  'preview_path varchar (250) NOT NULL,'
                                  'img1_path varchar (250),'
                                  'img2_path varchar (250),'
@@ -33,16 +34,16 @@ def initialize_lessons_table():
             conn.commit()
             conn.close()
 
-def insert_lesson_into_lesson_tables(name, content, preview_path, img1_path, img2_path, img3_path):
+def insert_lesson_into_lesson_tables(name, content, content2, preview_path, img1_path, img2_path, img3_path):
     conn = None
     try:
         # connect to the PostgreSQL database
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         # create a cursor object for execution
         cur = conn.cursor()
-        cur.execute('INSERT INTO lessons (name, content, preview_path, img1_path, img2_path, img3_path)'
-            'VALUES (%s, %s, %s, %s, %s, %s)',
-            (name, content, str(preview_path), str(img1_path), str(img2_path), str(img3_path))
+        cur.execute('INSERT INTO lessons (name, content, content2, preview_path, img1_path, img2_path, img3_path)'
+            'VALUES (%s, %s, %s, %s, %s, %s, %s)',
+            (name, content, content2, str(preview_path), str(img1_path), str(img2_path), str(img3_path))
             )
         # close the communication with the PostgreSQL database server
         cur.close()
@@ -66,7 +67,7 @@ def get_all_lessons():
         row = cur.fetchone()
         all_lessons = []
         while row is not None:
-            lesson = dict(id=row[0], name=row[1], content=row[2], preview_path=row[3], img1_path=row[4], img2_path=row[5], img3_path=row[6])
+            lesson = dict(id=row[0], name=row[1], content=row[2], content2=row[3], preview_path=row[4], img1_path=row[5], img2_path=row[6], img3_path=row[7])
             all_lessons.append(lesson)
             row = cur.fetchone()
         # close the communication with the PostgreSQL database server
@@ -136,7 +137,7 @@ def lesson():
         row = get_lesson_by_id(int(lesson_id))
         if row:
             all_lessons = get_all_lessons()
-            lesson_dict = dict(id=row[0], name=row[1], content=row[2], preview_path=row[3], img1_path=row[4], img2_path=row[5], img3_path=row[6])
+            lesson_dict = dict(id=row[0], name=row[1], content=row[2], content2=row[3], preview_path=row[4], img1_path=row[5], img2_path=row[6], img3_path=row[7])
             if all_lessons:
                 return render_template("lesson.html", id=lesson_id, lesson=lesson_dict, all_lessons=all_lessons)
             return render_template("lesson.html", id=lesson_id, lesson=lesson_dict, all_lessons=[])
@@ -159,35 +160,13 @@ def create_lesson_form():
 def push_lesson_to_database():
     name = request.form.get("lesson_name")
     content = request.form.get("lesson_content")
-    # content = """play_measure_1
-    #             for repeat_number in range(repeats-1):
-    #             if repeat_number == 1:
-    #                 play_measures_2_and_3
-    #             elif repeat_number == 2:
-    #                 play_measures_2_and_3
-    #             else:
-    #                 play_measure_2
-    #             play_measures_4_and_5
-
-    #             play_measure_1
-    #             repeat_number = 1
-    #             while repeat_number <= repeats:
-    #                 play_measure_2
-    #             if repeat_number == 1 or repeat_number == 2:
-    #                 play_measure_3
-    #             repeat_number = repeat_number + 1
-    #             play_measures_4_and_5"""
+    content2 = request.form.get("lesson_content_2")
     preview_path = request.form.get("preview_path")
     img1_path = request.form.get("lesson_image_1")
     img2_path = request.form.get("lesson_image_2")
     img3_path = request.form.get("lesson_image_3")
-    # img_path = "loops.jpg"
-    print(name, content, preview_path, img1_path, img2_path, img3_path)
-    # if img_path:
-    #     insert_lesson_into_lesson_tables(name, img_path, content)
-    # else:
-    #     insert_lesson_into_lesson_tables(name, None, content)
-    insert_lesson_into_lesson_tables(name, content, preview_path, img1_path, img2_path, img3_path)
+    print(name, content, content2, preview_path, img1_path, img2_path, img3_path)
+    insert_lesson_into_lesson_tables(name, content, content2, preview_path, img1_path, img2_path, img3_path)
     return redirect("/")
     
 
